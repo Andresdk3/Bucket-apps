@@ -1,0 +1,21 @@
+﻿{
+    "url":  "https://github.com/veracrypt/VeraCrypt/releases/download/VeraCrypt_1.26.7/VeraCrypt%20Setup%201.26.7.exe",
+    "description":  "Open-source disk encryption software",
+    "bin":  "VeraCrypt.exe",
+    "version":  "1.26.7",
+    "autoupdate":  {
+                       "url":  "https://github.com/veracrypt/VeraCrypt/releases/download/VeraCrypt_1.26.7/VeraCrypt%20Setup%201.26.7.exe",
+                       "checkver":  {
+                                        "url":  "https://github.com/veracrypt/VeraCrypt/releases",
+                                        "regex":  "VeraCrypt ([0-9.]+)"
+                                    }
+                   },
+    "license":  "Apache-2.0",
+    "homepage":  "https://www.veracrypt.fr",
+    "shortcuts":  [
+                      "VeraCrypt.exe",
+                      "VeraCrypt"
+                  ],
+    "innosetup":  true,
+    "hash":  null
+}
