@@ -3,15 +3,10 @@
   "description": "Open-source disk encryption software",
   "homepage": "https://www.veracrypt.fr",
   "license": "Apache-2.0",
-  "innosetup": true,
   "architecture": {
     "64bit": {
-      "url": "https://downloads.sourceforge.net/project/veracrypt/VeraCrypt%201.26.24/VeraCrypt%20Setup%201.26.24.exe",
+      "url": "https://netactuate.dl.sourceforge.net/project/veracrypt/VeraCrypt%201.26.24/Windows/VeraCrypt%20Portable%201.26.24.exe?viasf=1",
       "hash": "TODO_SHA256_64"
-    },
-    "32bit": {
-      "url": "https://downloads.sourceforge.net/project/veracrypt/VeraCrypt%201.26.24/VeraCrypt%20Setup%20x86%201.26.24.exe",
-      "hash": "TODO_SHA256_32"
     }
   },
   "bin": "VeraCrypt.exe",
@@ -28,10 +23,7 @@
   "autoupdate": {
     "architecture": {
       "64bit": {
-        "url": "https://downloads.sourceforge.net/project/veracrypt/VeraCrypt%20$version/VeraCrypt%20Setup%20$version.exe"
-      },
-      "32bit": {
-        "url": "https://downloads.sourceforge.net/project/veracrypt/VeraCrypt%20$version/VeraCrypt%20Setup%20x86%20$version.exe"
+        "url": "https://netactuate.dl.sourceforge.net/project/veracrypt/VeraCrypt%20$version/Windows/VeraCrypt%20Portable%20$version.exe?viasf=1"
       }
     }
   }
