@@ -19,42 +19,65 @@ if (!(Test-Path "bucket")) {
     New-Item -ItemType Directory -Path "bucket" | Out-Null
 }
 
-# 2. Datos de VeraCrypt
-$version = "1.26.7"
-$url = "https://github.com/veracrypt/VeraCrypt/releases/download/VeraCrypt_$version/VeraCrypt%20Setup%20$version.exe"
-$tempFile = "$env:TEMP\veracrypt-$version.exe"
+# 2. Datos de VeraCrypt versión actual
+$version = "1.26.24"
 
-# Descargar instalador
-Invoke-WebRequest -Uri $url -OutFile $tempFile
+# URLs correctas
+$url64 = "https://github.com/veracrypt/VeraCrypt/releases/download/VeraCrypt_$version/VeraCrypt_Setup_$version.exe"
+$url32 = "https://github.com/veracrypt/VeraCrypt/releases/download/VeraCrypt_$version/VeraCrypt_Setup_x86_$version.exe"
 
-# 3. Calcular hash
-$hash = (Get-FileHash $tempFile -Algorithm SHA256).Hash.ToLower()
+$temp64 = "$env:TEMP\veracrypt_$version_x64.exe"
+$temp32 = "$env:TEMP\veracrypt_$version_x86.exe"
 
-# 4. Crear manifiesto JSON con autoupdate y regex
+# 3. Descargar instaladores
+Invoke-WebRequest -Uri $url64 -OutFile $temp64
+Invoke-WebRequest -Uri $url32 -OutFile $temp32
+
+# 4. Calcular hashes
+$hash64 = (Get-FileHash $temp64 -Algorithm SHA256).Hash.ToLower()
+$hash32 = (Get-FileHash $temp32 -Algorithm SHA256).Hash.ToLower()
+
+# 5. Crear manifiesto JSON con autoupdate
 $manifest = @{
     version     = $version
     description = "Open-source disk encryption software"
-    homepage    = "https://www.veracrypt.fr"
+    homepage    = "https://veracrypt.fr"
     license     = "Apache-2.0"
-    url         = $url
-    hash        = $hash
     innosetup   = $true
+    architecture = @{
+        "64bit" = @{
+            url  = $url64
+            hash = $hash64
+        }
+        "32bit" = @{
+            url  = $url32
+            hash = $hash32
+        }
+    }
     bin         = "VeraCrypt.exe"
     shortcuts   = @(
         @("VeraCrypt.exe", "VeraCrypt")
     )
-    autoupdate  = @{
-        url = "https://github.com/veracrypt/VeraCrypt/releases/download/VeraCrypt_$version/VeraCrypt%20Setup%20$version.exe"
+    autoupdate = @{
+        architecture = @{
+            "64bit" = @{
+                url = "https://github.com/veracrypt/VeraCrypt/releases/download/VeraCrypt_$version/VeraCrypt_Setup_$version.exe"
+            }
+            "32bit" = @{
+                url = "https://github.com/veracrypt/VeraCrypt/releases/download/VeraCrypt_$version/VeraCrypt_Setup_x86_$version.exe"
+            }
+        }
         checkver = @{
             url   = "https://github.com/veracrypt/VeraCrypt/releases"
-            regex = "VeraCrypt ([0-9.]+)"
+            regex = "VeraCrypt_([0-9.]+)"
         }
     }
 }
 
 $manifest | ConvertTo-Json -Depth 5 | Out-File "bucket/veracrypt.json" -Encoding UTF8
 
-# 5. Commit inicial
+# 6. Commit
 git add bucket/veracrypt.json
-git commit -m "Add VeraCrypt $version manifest with autoupdate"
-Write-Host "✅ Manifest for VeraCrypt $version created successfully with autoupdate regex!"
+git commit -m "Add VeraCrypt $version manifest with correct URLs & autoupdate"
+Write-Host "✅ Manifest for VeraCrypt $version creado con éxito!"
+

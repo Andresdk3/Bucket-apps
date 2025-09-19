@@ -1,21 +1,38 @@
 ﻿{
-    "url":  "https://github.com/veracrypt/VeraCrypt/releases/download/VeraCrypt_1.26.7/VeraCrypt%20Setup%201.26.7.exe",
-    "description":  "Open-source disk encryption software",
-    "bin":  "VeraCrypt.exe",
-    "version":  "1.26.7",
-    "autoupdate":  {
-                       "url":  "https://github.com/veracrypt/VeraCrypt/releases/download/VeraCrypt_1.26.7/VeraCrypt%20Setup%201.26.7.exe",
-                       "checkver":  {
-                                        "url":  "https://github.com/veracrypt/VeraCrypt/releases",
-                                        "regex":  "VeraCrypt ([0-9.]+)"
-                                    }
-                   },
-    "license":  "Apache-2.0",
-    "homepage":  "https://www.veracrypt.fr",
-    "shortcuts":  [
-                      "VeraCrypt.exe",
-                      "VeraCrypt"
-                  ],
-    "innosetup":  true,
-    "hash":  null
+  "version": "1.26.24",
+  "description": "Open-source disk encryption software",
+  "homepage": "https://www.veracrypt.fr",
+  "license": "Apache-2.0",
+  "innosetup": true,
+  "architecture": {
+    "64bit": {
+      "url": "https://downloads.sourceforge.net/project/veracrypt/VeraCrypt%201.26.24/VeraCrypt%20Setup%201.26.24.exe",
+      "hash": "TODO_SHA256_64"
+    },
+    "32bit": {
+      "url": "https://downloads.sourceforge.net/project/veracrypt/VeraCrypt%201.26.24/VeraCrypt%20Setup%20x86%201.26.24.exe",
+      "hash": "TODO_SHA256_32"
+    }
+  },
+  "bin": "VeraCrypt.exe",
+  "shortcuts": [
+    [
+      "VeraCrypt.exe",
+      "VeraCrypt"
+    ]
+  ],
+  "checkver": {
+    "url": "https://sourceforge.net/projects/veracrypt/rss?path=/",
+    "regex": "VeraCrypt ([\\d.]+)"
+  },
+  "autoupdate": {
+    "architecture": {
+      "64bit": {
+        "url": "https://downloads.sourceforge.net/project/veracrypt/VeraCrypt%20$version/VeraCrypt%20Setup%20$version.exe"
+      },
+      "32bit": {
+        "url": "https://downloads.sourceforge.net/project/veracrypt/VeraCrypt%20$version/VeraCrypt%20Setup%20x86%20$version.exe"
+      }
+    }
+  }
 }
